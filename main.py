@@ -7,7 +7,7 @@ from core.event_handler import start_app_handler, stop_app_handler
 
 app = FastAPI(title=settings.PROJECT_NAME)
 origins = [
-    "*"
+    "http://localhost:3001/"
 ]
 app.add_middleware(
     CORSMiddleware,
