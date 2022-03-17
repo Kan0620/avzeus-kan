@@ -10,6 +10,13 @@ origins = [
     "http://localhost:3001/",
     "http://localhost:3001"
 ]
+
+app.include_router(heartbeat_router)
+app.include_router(api_router, prefix=settings.API_V1_STR, tags=["ML API"])
+
+app.add_event_handler("startup", start_app_handler(app, settings.MODEL_PATH))
+app.add_event_handler("shutdown", stop_app_handler(app))
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -17,11 +24,6 @@ app.add_middleware(
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["Content-Type"],
 )
-app.include_router(heartbeat_router)
-app.include_router(api_router, prefix=settings.API_V1_STR, tags=["ML API"])
-
-app.add_event_handler("startup", start_app_handler(app, settings.MODEL_PATH))
-app.add_event_handler("shutdown", stop_app_handler(app))
 """
 if __name__ == "__main__":
     # Use this for debugging purposes only
