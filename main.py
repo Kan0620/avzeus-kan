@@ -11,7 +11,9 @@ origins = [
     "http://localhost:3001/",
     "http://localhost:3001"
 ]
-middleware = [Middleware(CORSMiddleware, allow_origins=origins)]
+middleware = [Middleware(CORSMiddleware, allow_credentials=True,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type"],allow_origins=origins)]
 
 app = FastAPI(middleware=middleware, title=settings.PROJECT_NAME)
 
