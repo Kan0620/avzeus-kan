@@ -7,11 +7,10 @@ from api.heartbeat import heartbeat_router
 from core.config import settings
 from core.event_handler import start_app_handler, stop_app_handler
 
-origins = [
-    "http://localhost:3001/",
-    "http://localhost:3001"
-]
-middleware = [Middleware(CORSMiddleware, allow_origins=origins)]
+origins = ["http://test-zeus-kan.s3-website-ap-northeast-1.amazonaws.com"]
+middleware = [Middleware(CORSMiddleware, allow_credentials=True,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type"],allow_origins=origins)]
 
 app = FastAPI(middleware=middleware, title=settings.PROJECT_NAME)
 
