@@ -23,8 +23,8 @@ origins = ["http://test-zeus-kan.s3-website-ap-northeast-1.amazonaws.com"]
 middleware = [
     Middleware(CORSMiddleware,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["X-Requested-With", "Origin", "X-Csrftoken", "Content-Type", "Accept"],
     allow_origins=origins)]
 
 app = FastAPI(middleware=middleware, title=settings.PROJECT_NAME)
