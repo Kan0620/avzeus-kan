@@ -48,12 +48,6 @@ class MLModel(BaseMLModel):
         
     def cut(self, input_text: str) -> dict:
         try:
-            if input_text[:3] == "/9j":
-                return {'riho':'true'}
-            elif input_text == "":
-                return {'riho':'false', 'input_text':"empty"}
-            else:
-                return {'riho':'false', 'input_text':input_text}
             input_text = BytesIO(base64.b64decode(input_text))
             img = Image.open(input_text)
             with torch.no_grad():
@@ -74,7 +68,7 @@ class MLModel(BaseMLModel):
 
         
         except:
-            return {"is_face": str(False), "img": input_text}
+            return {"is_face": str(False), "img": "error"}
         
 
     def predict(self, input_text: str) -> dict:
