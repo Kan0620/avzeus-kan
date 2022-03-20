@@ -51,7 +51,7 @@ class MLModel(BaseMLModel):
             if input_text[:3] == "/9j":
                 return {'riho':'true'}
             else:
-                return {'riho':'false'}
+                return {'riho':'false', 'input_text':input_text}
             input_text = BytesIO(base64.b64decode(input_text))
             img = Image.open(input_text)
             with torch.no_grad():
