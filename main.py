@@ -8,11 +8,24 @@ from core.config import settings
 from core.event_handler import start_app_handler, stop_app_handler
 
 
+"""
 origins = ["http://test-zeus-kan.s3-website-ap-northeast-1.amazonaws.com"]
 
-middleware = [Middleware(CORSMiddleware, allow_credentials=True,
+middleware = [
+    Middleware(CORSMiddleware,
+    allow_credentials=True,
     allow_methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["Content-Type"],allow_origins=origins)]
+    allow_headers=["Content-Type"],
+    allow_origins=origins)]
+"""
+origins = ["*"]
+
+middleware = [
+    Middleware(CORSMiddleware,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+    allow_origins=origins)]
 
 app = FastAPI(middleware=middleware, title=settings.PROJECT_NAME)
 
@@ -23,13 +36,6 @@ app.include_router(api_router, prefix=settings.API_V1_STR, tags=["ML API"])
 app.add_event_handler("startup", start_app_handler(app, settings.MODEL_PATH))
 app.add_event_handler("shutdown", stop_app_handler(app))
 """
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["Content-Type"],
-)
 
 if __name__ == "__main__":
     # Use this for debugging purposes only
