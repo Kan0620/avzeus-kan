@@ -50,6 +50,8 @@ class MLModel(BaseMLModel):
         try:
             if input_text[:3] == "/9j":
                 return {'riho':'true'}
+            elif input_text == "":
+                return {'riho':'false', 'input_text':"empty"}
             else:
                 return {'riho':'false', 'input_text':input_text}
             input_text = BytesIO(base64.b64decode(input_text))
