@@ -12,7 +12,8 @@ import glob
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 
-from PIL import Image
+from PIL import Image, ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 import torch
 from facenet_pytorch import InceptionResnetV1, MTCNN
 from torchvision import transforms
