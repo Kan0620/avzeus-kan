@@ -48,11 +48,8 @@ class MLModel(BaseMLModel):
         
     def cut(self, input_text: str) -> dict:
         #try:
-        #input_text = BytesIO(base64.b64decode(input_text))
-        input_text = a2b_base64(input_text)
-        input_text = StringIO.StringIO(input_text)
+        input_text = BytesIO(base64.b64decode(input_text))
         img = Image.open(input_text)
-        #img = Image.open(input_text)
         with torch.no_grad():
             #img.save("input.png")
             img = self.mtcnn(img, "img.png")
