@@ -61,10 +61,10 @@ class MLModel(BaseMLModel):
                 out_img = Image.open(BytesIO(base64.b64decode(img)))
                 #out_img.save("output.png")
 
-            return {"is_face": is_face, "img": str(img)}
+            return {"is_face": str(is_face), "img": str(img)}
 
         except:
-            return {"is_face": False, "img": "error"}
+            return {"is_face": str(False), "img": "error"}
 
     def predict(self, input_text: str) -> dict:
         img = Image.open(BytesIO(base64.b64decode(input_text)))
