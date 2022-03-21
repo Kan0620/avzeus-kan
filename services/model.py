@@ -47,29 +47,23 @@ class MLModel(BaseMLModel):
 
         
     def cut(self, input_text: str) -> dict:
-        try:
-            input_text = BytesIO(base64.b64decode(input_text))
-            img = Image.open(input_text)
-            with torch.no_grad():
-                #img.save("input.png")
-                img = self.mtcnn(img, "img.png")
-            is_face = True
-            if str(img) == "None":
-                is_face = False
-            else:
-                buffer = BytesIO()
-                img = transforms.functional.to_pil_image(img)	
-                img.save(buffer, format="png")
-                img = base64.b64encode(buffer.getvalue()).decode("utf-8").replace("'", "")
-                out_img = Image.open(BytesIO(base64.b64decode(img)))
-                #out_img.save("output.png")
+        input_text = BytesIO(base64.b64decode(input_text))
+        img = Image.open(input_text)
+        with torch.no_grad():
+            #img.save("input.png")
+            img = self.mtcnn(img, "img.png")
+        is_face = True
+        if str(img) == "None":
+            is_face = False
+        else:
+            buffer = BytesIO()
+            img = transforms.functional.to_pil_image(img)	
+            img.save(buffer, format="png")
+            img = base64.b64encode(buffer.getvalue()).decode("utf-8").replace("'", "")
+            out_img = Image.open(BytesIO(base64.b64decode(img)))
+            #out_img.save("output.png")
 
-            return {"is_face": str(is_face), "img": str(img)}
-
-        
-        except:
-            return {"is_face": str(False), "img": "error"}
-        
+        return {"is_face": str(is_face), "img": str(img)}
 
     def predict(self, input_text: str) -> dict:
         img = Image.open(BytesIO(base64.b64decode(input_text)))
