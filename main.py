@@ -18,7 +18,9 @@ middleware = [
     allow_headers=["Content-Type"],
     allow_origins=origins)]
 """
-origins = ["http://test-zeus-kan.s3-website-ap-northeast-1.amazonaws.com"]
+origins = [
+    "http://test-zeus-kan.s3-website-ap-northeast-1.amazonaws.com",
+    "https://avzeus-front.herokuapp.com/"]
 
 middleware = [
     Middleware(CORSMiddleware,
