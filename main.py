@@ -20,14 +20,16 @@ middleware = [
 """
 origins = [
     "http://test-zeus-kan.s3-website-ap-northeast-1.amazonaws.com",
-    "https://avzeus-front.herokuapp.com/img-rec"]
+    "https://avzeus-front.herokuapp.com"]
 
 middleware = [
     Middleware(CORSMiddleware,
     allow_credentials=True,
-    allow_methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["X-Requested-With", "Origin", "X-Csrftoken", "Content-Type", "Accept"],
-    allow_origins=origins)]
+    allow_methods=["*"],
+    allow_headers=["*"],
+    allow_origins=origins,
+    expose_headers=["*"])
+    ]
 
 app = FastAPI(middleware=middleware, title=settings.PROJECT_NAME)
 
