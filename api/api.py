@@ -2,12 +2,12 @@ from typing import Any
 
 from fastapi import APIRouter, Request
 
-from models.predict import PredictRequest, PredictResponse
+from models.predict import PredictRequest, CutResponse, PredictResponse
 
 api_router = APIRouter()
 
 
-@api_router.post("/cut", response_model=PredictResponse)
+@api_router.post("/cut", response_model=CutResponse)
 async def predict(request: Request, payload: PredictRequest) -> Any:
     """
     ML Prediction API
