@@ -71,8 +71,8 @@ class MLModel(BaseMLModel):
         with torch.no_grad():
             img = self.resnet(img)
         img = img[0].detach().numpy()
-        rec_actress_id = []
+        rec_actress_id = ""
         for index in np.argsort(np.square(self.vecs - img).sum(axis = 1))[:10]:
-                rec_actress_id.append(str(self.ids[index]))
+                rec_actress_id += str(self.ids[index]) + "-"
 
-        return {"rec_actress_id": rec_actress_id}
+        return {"rec_actress_id": rec_actress_id[:-1]}
