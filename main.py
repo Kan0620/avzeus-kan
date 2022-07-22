@@ -20,7 +20,8 @@ middleware = [
 """
 origins = [
     "http://test-zeus-kan.s3-website-ap-northeast-1.amazonaws.com",
-    "https://avzeus-front.herokuapp.com"]
+    "https://avzeus-front.herokuapp.com",
+    "https://www.av-zeus.com/"]
 
 middleware = [
     Middleware(CORSMiddleware,
