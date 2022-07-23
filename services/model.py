@@ -60,7 +60,7 @@ class MLModel(BaseMLModel):
             img = transforms.functional.to_pil_image(img)	
             # https://stackoverflow.com/questions/646286/how-to-write-png-image-to-string-with-the-pil
             with BytesIO() as output:
-                img.save(output, format=img.format)
+                img.save(output, format="jpeg")
                 contents = output.getvalue()
             img = base64.b64encode(contents).decode("utf-8").replace("'", "")
             print(glob.glob("./services/*"))
