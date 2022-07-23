@@ -13,9 +13,10 @@ async def predict(request: Request, payload: PredictRequest) -> Any:
     ML Prediction API
     """
     input_text = payload.input_text
-    model = request.app.state.model
+    # model = request.app.state.model
 
-    predict_value = model.cut(input_text)
+    # predict_value = model.cut(input_text)
+    predict_value = request.app.state.model.cut(input_text)
     return PredictResponse(result=predict_value)
 
 @api_router.post("/predict", response_model=PredictResponse)
@@ -24,9 +25,10 @@ async def predict(request: Request, payload: PredictRequest) -> Any:
     ML Prediction API
     """
     input_text = payload.input_text
-    model = request.app.state.model
+    # model = request.app.state.model
 
-    predict_value = model.predict(input_text)
+    # predict_value = model.predict(input_text)
+    predict_value =request.app.state.predict(input_text)
     return PredictResponse(result=predict_value)
 
 
