@@ -60,7 +60,7 @@ class MLModel(BaseMLModel):
             img = transforms.functional.to_pil_image(img)	
             img.save(buffer, format="png")
             img = base64.b64encode(buffer.getvalue()).decode("utf-8").replace("'", "")
-            out_img = Image.open(BytesIO(base64.b64decode(img)))
+            #out_img = Image.open(BytesIO(base64.b64decode(img)))
             #out_img.save("output.png")
 
         return {"is_face": str(is_face), "img": str(img)}
