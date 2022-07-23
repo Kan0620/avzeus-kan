@@ -51,9 +51,8 @@ class MLModel(BaseMLModel):
         input_text = BytesIO(base64.b64decode(input_text))
         img = Image.open(input_text)
         with torch.no_grad():
-            #img.save("input.png")
             img = self.mtcnn(img, "img.png")
-            os.remove("img.png")
+            #os.remove("img.png")
         is_face = True
         if str(img) == "None":
             is_face = False
@@ -64,6 +63,7 @@ class MLModel(BaseMLModel):
                 img.save(output, format=img.format)
                 contents = output.getvalue()
             img = base64.b64encode(contents).decode("utf-8").replace("'", "")
+            print(glob.glob("./services/*"))
             #img = base64.b64encode(buffer.getvalue()).decode("utf-8").replace("'", "")
             #out_img = Image.open(BytesIO(base64.b64decode(img)))
             #out_img.save("output.png")
