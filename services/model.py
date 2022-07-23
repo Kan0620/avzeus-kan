@@ -58,11 +58,17 @@ class MLModel(BaseMLModel):
         if str(img) == "None":
             is_face = False
         else:
-            buffer = BytesIO()
+            # https://stackoverflow.com/questions/646286/how-to-write-png-image-to-string-with-the-pil
+            
             img = transforms.functional.to_pil_image(img)	
-            img.save(buffer, format="png")
-            print(glob.glob("*"))
-            img = base64.b64encode(buffer.getvalue()).decode("utf-8").replace("'", "")
+            # buffer = BytesIO()
+            # img.save(buffer, format="png")
+            with BytesIO() as output:
+                img.save(output, format="jpeg")
+                contents = output.getvalue()
+            print(glob.glob("./services/*"))
+            img = base64.b64encode(contents).decode("utf-8").replace("'", "")
+            #img = base64.b64encode(buffer.getvalue()).decode("utf-8").replace("'", "")
             #out_img = Image.open(BytesIO(base64.b64decode(img)))
             #out_img.save("output.png")
 
