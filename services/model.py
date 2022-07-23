@@ -10,6 +10,7 @@ from io import BytesIO, StringIO
 from binascii import a2b_base64
 import base64
 import glob
+import os
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 
@@ -52,6 +53,7 @@ class MLModel(BaseMLModel):
         with torch.no_grad():
             #img.save("input.png")
             img = self.mtcnn(img, "img.png")
+            os.remove("img.png")
         is_face = True
         if str(img) == "None":
             is_face = False
@@ -59,6 +61,7 @@ class MLModel(BaseMLModel):
             buffer = BytesIO()
             img = transforms.functional.to_pil_image(img)	
             img.save(buffer, format="png")
+            print(glob.glob("*"))
             img = base64.b64encode(buffer.getvalue()).decode("utf-8").replace("'", "")
             #out_img = Image.open(BytesIO(base64.b64decode(img)))
             #out_img.save("output.png")
