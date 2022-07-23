@@ -48,7 +48,8 @@ class MLModel(BaseMLModel):
 
         
     def cut(self, input_text: str) -> dict:
-        input_text = BytesIO(base64.b64decode(input_text))
+        #input_text = BytesIO(base64.b64decode(input_text))
+        input_text = base64.b64decode(input_text).decode()
         img = Image.open(input_text)
         with torch.no_grad():
             img = self.mtcnn(img, "img.png")
@@ -62,7 +63,8 @@ class MLModel(BaseMLModel):
             with BytesIO() as output:
                 img.save(output, format="jpeg")
                 contents = output.getvalue()
-            img = base64.b64encode(contents).decode("utf-8").replace("'", "")
+            #img = base64.b64encode(contents).decode("utf-8").replace("'", "")
+            img = base64.b64encode(contents)
             print(glob.glob("./services/*"))
             #img = base64.b64encode(buffer.getvalue()).decode("utf-8").replace("'", "")
             #out_img = Image.open(BytesIO(base64.b64decode(img)))
