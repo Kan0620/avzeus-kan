@@ -62,9 +62,8 @@ class MLModel(BaseMLModel):
             with BytesIO() as output:
                 img.save(output, format="jpeg")
                 contents = output.getvalue()
-            #img = base64.b64encode(contents).decode("utf-8").replace("'", "")
-            img = base64.b64encode(contents).replace("'", "")
-            print(glob.glob("./services/*"))
+            #img = img = base64.b64encode(contents).replace("'", "")
+            img = base64.b64encode(contents).decode("ascii")
             #img = base64.b64encode(buffer.getvalue()).decode("utf-8").replace("'", "")
             #out_img = Image.open(BytesIO(base64.b64decode(img)))
             #out_img.save("output.png")
