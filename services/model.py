@@ -57,7 +57,8 @@ class MLModel(BaseMLModel):
         if str(img) == "None":
             is_face = False
         else:
-            img = transforms.functional.to_pil_image(img)	
+            #img = transforms.functional.to_pil_image(img)	
+            img = Image.open("img.png")
             # https://stackoverflow.com/questions/646286/how-to-write-png-image-to-string-with-the-pil
             with BytesIO() as output:
                 img.save(output, format="jpeg")
