@@ -21,7 +21,6 @@ from facenet_pytorch import InceptionResnetV1, MTCNN
 from torchvision import transforms
 import numpy as np
 
-#from .my_resenet import MyInceptionResnetV1
 
 class BaseMLModel(ABC):
     @abstractmethod
@@ -41,8 +40,8 @@ class MLModel(BaseMLModel):
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
             ])
-        self.ids = np.load("data/id.npy")
-        self.vecs = np.load("data/actress_vecs.npy", allow_pickle = True)
+        self.ids = np.load("app/data/id.npy")
+        self.vecs = np.load("app/data/actress_vecs.npy", allow_pickle = True)
 
     def cut(self, input_text: str) -> dict:
         input_text = BytesIO(base64.b64decode(input_text))

@@ -2,7 +2,7 @@ from typing import Any
 
 from fastapi import APIRouter, Request
 
-from models.predict import PredictRequest, CutResponse, PredictResponse
+from app.models.predict import PredictRequest, CutResponse, PredictResponse
 
 api_router = APIRouter()
 

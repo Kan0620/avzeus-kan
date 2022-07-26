@@ -2,22 +2,12 @@ from fastapi import FastAPI
 #from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware import Middleware
 from starlette.middleware.cors import CORSMiddleware
-from api.api import api_router
-from api.heartbeat import heartbeat_router
-from core.config import settings
-from core.event_handler import start_app_handler, stop_app_handler
 
+from app.api.api import api_router
+from app.api.heartbeat import heartbeat_router
+from app.core.config import settings
+from app.core.event_handler import start_app_handler, stop_app_handler
 
-"""
-origins = ["http://test-zeus-kan.s3-website-ap-northeast-1.amazonaws.com"]
-
-middleware = [
-    Middleware(CORSMiddleware,
-    allow_credentials=True,
-    allow_methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["Content-Type"],
-    allow_origins=origins)]
-"""
 origins = [
     "http://test-zeus-kan.s3-website-ap-northeast-1.amazonaws.com",
     "https://avzeus-front.herokuapp.com",
