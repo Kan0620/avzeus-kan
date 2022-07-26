@@ -66,8 +66,8 @@ class MLModel(BaseMLModel):
 
     def predict(self, input_text: str) -> dict:
         img = Image.open(BytesIO(base64.b64decode(input_text)))
-        img = self.transform(img).reshape((1, 3, 160, 160))
         img = img.convert("RGB")
+        img = self.transform(img).reshape((1, 3, 160, 160))
         with torch.no_grad():
             img = self.resnet(img)
         img = img[0].detach().numpy()
