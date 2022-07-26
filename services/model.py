@@ -36,17 +36,14 @@ class MLModel(BaseMLModel):
 
     def __init__(self, model_path: str) -> None:
         self.mtcnn = MTCNN(image_size = 160, margin = 10).eval()
-        #self.resnet = MyInceptionResnetV1(pretrained = 'vggface2').eval()
-        #self.resnet.load_state_dict(torch.load("./services/resnet"))
         self.resnet = InceptionResnetV1(pretrained='vggface2').eval()
         self.transform = transforms.Compose([
             transforms.ToTensor(),
-            #transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
             ])
         self.ids = np.load("data/id.npy")
         self.vecs = np.load("data/actress_vecs.npy", allow_pickle = True)
 
-        
     def cut(self, input_text: str) -> dict:
         input_text = BytesIO(base64.b64decode(input_text))
         img = Image.open(input_text)
@@ -58,23 +55,19 @@ class MLModel(BaseMLModel):
         if str(img) == "None":
             is_face = False
         else:
-            #img = transforms.functional.to_pil_image(img)	
             img = Image.open("img.png")
             # https://stackoverflow.com/questions/646286/how-to-write-png-image-to-string-with-the-pil
             with BytesIO() as output:
                 img.save(output, format="png")
                 contents = output.getvalue()
-            #img = img = base64.b64encode(contents).replace("'", "")
             img = base64.b64encode(contents).decode("ascii")
-            #img = base64.b64encode(buffer.getvalue()).decode("utf-8").replace("'", "")
-            #out_img = Image.open(BytesIO(base64.b64decode(img)))
-            #out_img.save("output.png")
-
+            
         return {"is_face": str(is_face), "img": str(img)}
 
     def predict(self, input_text: str) -> dict:
         img = Image.open(BytesIO(base64.b64decode(input_text)))
         img = self.transform(img).reshape((1, 3, 160, 160))
+        img = img.convert("RGB")
         with torch.no_grad():
             img = self.resnet(img)
         img = img[0].detach().numpy()
