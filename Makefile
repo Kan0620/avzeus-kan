@@ -18,4 +18,4 @@ deploy:
 log:
 		heroku logs --tail
 
-#git push heroku <現在いるブランチ名>:master
+#git push heroku <現在いるブランチ名>:main
