@@ -11,7 +11,8 @@ from app.core.event_handler import start_app_handler, stop_app_handler
 origins = [
     "http://test-zeus-kan.s3-website-ap-northeast-1.amazonaws.com",
     "https://avzeus-front.herokuapp.com",
-    "https://www.av-zeus.com"]
+    "https://www.av-zeus.com",
+    "http://localhost:8080"]
 
 middleware = [
     Middleware(CORSMiddleware,
@@ -31,7 +32,6 @@ app.include_router(api_router, prefix=settings.API_V1_STR, tags=["ML API"])
 app.add_event_handler("startup", start_app_handler(app, settings.MODEL_PATH))
 app.add_event_handler("shutdown", stop_app_handler(app))
 """
-
 if __name__ == "__main__":
     # Use this for debugging purposes only
     import uvicorn
