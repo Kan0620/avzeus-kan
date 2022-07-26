@@ -50,6 +50,7 @@ class MLModel(BaseMLModel):
     def cut(self, input_text: str) -> dict:
         input_text = BytesIO(base64.b64decode(input_text))
         img = Image.open(input_text)
+        img = img.convert("RGB")
         with torch.no_grad():
             img = self.mtcnn(img, "img.png")
             #os.remove("img.png")
@@ -61,7 +62,7 @@ class MLModel(BaseMLModel):
             img = Image.open("img.png")
             # https://stackoverflow.com/questions/646286/how-to-write-png-image-to-string-with-the-pil
             with BytesIO() as output:
-                img.save(output, format="jpeg")
+                img.save(output, format="png")
                 contents = output.getvalue()
             #img = img = base64.b64encode(contents).replace("'", "")
             img = base64.b64encode(contents).decode("ascii")
