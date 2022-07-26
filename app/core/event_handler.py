@@ -2,7 +2,7 @@ from typing import Callable
 
 from fastapi import FastAPI
 
-from services.model import MLModel
+from app.services.model import MLModel
 
 
 def _startup_model(app: FastAPI, model_path: str) -> None:

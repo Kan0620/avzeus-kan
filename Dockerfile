@@ -7,8 +7,6 @@ RUN pip install -U pip \
 
 COPY ./start.sh /start.sh
 
-RUN chmod +x /start.sh
-
 COPY ./app /app
 
-CMD ["./start.sh"]
+CMD ["uvicorn", "app.main:app", "--reload", "--host", "0.0.0.0", "--port", "80"]
