@@ -1,4 +1,5 @@
 from typing import Callable
+import os
 
 from fastapi import FastAPI
 
@@ -8,6 +9,7 @@ from app.services.model import MLModel
 def _startup_model(app: FastAPI, model_path: str) -> None:
     model_instance = MLModel(model_path)
     app.state.model = model_instance
+    print(os.environ["ORIGIN"])
 
 
 def _shutdown_model(app: FastAPI) -> None:
