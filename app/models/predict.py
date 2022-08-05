@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, StrictStr
+from pydantic import BaseModel, Field
 
 
 class PredictRequest(BaseModel):
@@ -9,3 +9,25 @@ class CutResponse(BaseModel):
 
 class PredictResponse(BaseModel):
     result: dict = Field(..., title="result", description="Predict value", example={"rec_actress_id": "None"})
+
+class MovRecResponse(BaseModel):
+    result: dict = Field(..., title="result", description="Predict value", example={
+        "movie":{
+            "content_id": "xxx",
+            "title": "xxx",
+            "movieURL": "xxx"
+            },
+        "thumbnails": [
+            {
+                "content_id": "xxx",
+                "title": "xxx",
+                "imageURL": "xxx",
+                },
+            {
+                "content_id": "yyy",
+                "title": "yyy",
+                "imageURL": "yyy",
+                }
+            ]
+        }
+    )

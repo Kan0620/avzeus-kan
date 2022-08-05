@@ -1,3 +1,5 @@
+import os
+
 from fastapi import FastAPI
 #from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware import Middleware
@@ -9,10 +11,8 @@ from app.core.config import settings
 from app.core.event_handler import start_app_handler, stop_app_handler
 
 origins = [
-    "http://test-zeus-kan.s3-website-ap-northeast-1.amazonaws.com",
-    "https://avzeus-front.herokuapp.com",
-    "https://www.av-zeus.com",
-    "http://localhost:8080"]
+    os.environ['ORIGIN']
+    ]
 
 middleware = [
     Middleware(CORSMiddleware,
