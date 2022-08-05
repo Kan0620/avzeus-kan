@@ -13,7 +13,6 @@ from app.core.event_handler import start_app_handler, stop_app_handler
 origins = [
     os.environ['ORIGIN']
     ]
-print(origins)
 
 middleware = [
     Middleware(CORSMiddleware,
