@@ -73,5 +73,10 @@ class MLModel(BaseMLModel):
         rec_actress_id = ""
         for index in np.argsort(np.square(self.vecs - img).sum(axis = 1))[:10]:
                 rec_actress_id += str(self.ids[index]) + "-"
+        
+        # result_arr = (self.vecs * img.reshape((1, 512))).sum(axis=1)/np.linalg.norm(self.vecs, axis=1)/np.linalg.norm(img)
+        # for index in np.argsort(result_arr)[::-1][:10]:
+        #     rec_actress_id += str(self.ids[index]) + "-"
 
         return {"rec_actress_id": rec_actress_id[:-1]}
+    
