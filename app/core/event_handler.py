@@ -10,7 +10,7 @@ from app.services.model import MLModel
 def _startup_model(app: FastAPI, model_path: str) -> None:
     model_instance = MLModel(model_path)
     app.state.model = model_instance
-    URL = "https://api.dmm.com/affiliate/v3/ItemList?site=FANZA&sort=rank&hits=100"
+    URL = "https://api.dmm.com/affiliate/v3/ItemList?site=FANZA&sort=rank&hits=30"
     URL += ("&api_id=" + os.environ["API_ID"])
     URL += ("&affiliate_id=" + os.environ["AFFILIATE_ID"])
     mov_ids = []
