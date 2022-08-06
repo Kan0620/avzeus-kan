@@ -25,6 +25,7 @@ def _startup_model(app: FastAPI, model_path: str) -> None:
                         content_id = item["content_id"]
                         url = f"https://cc3001.dmm.co.jp/litevideo/freepv/{content_id[0]}/{content_id[:3]}/{content_id}/{content_id}_dmb_w.mp4"
                         status_code = requests.get(url).status_code
+                        print(status_code)
                         if str(status_code) == "200":
                             mov_ids.append(item["content_id"])
                             mov_dict[item["content_id"]] = {
@@ -32,6 +33,7 @@ def _startup_model(app: FastAPI, model_path: str) -> None:
                                 "imageURL": item["imageURL"]["large"],
                                 "movieURL": item["sampleMovieURL"]["size_720_480"],
                             }
+    print("api ok")
     app.state.mov_id_set = set(mov_ids)
     app.state.mov_dict = mov_dict
 
