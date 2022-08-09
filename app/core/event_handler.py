@@ -20,7 +20,8 @@ def _startup_model(app: FastAPI, model_path: str) -> None:
         r = requests.get(URL + f"&offset={i+1}")
         for item in r.json()["result"]["items"]:
             if ("imageURL" in item.keys()) and ("sampleMovieURL" in item.keys())\
-                and ("title" in item.keys())and ("content_id" in item.keys()):
+                and ("title" in item.keys())and ("content_id" in item.keys())\
+                    and ("affiliateURL" in item.keys()):
                     if ("large" in item["imageURL"].keys()) and ("size_720_480" in item["sampleMovieURL"].keys()):
                         content_id = item["content_id"]
                         url = f"https://cc3001.dmm.co.jp/litevideo/freepv/{content_id[0]}/{content_id[:3]}/{content_id}/{content_id}_dmb_w.mp4"
@@ -32,6 +33,7 @@ def _startup_model(app: FastAPI, model_path: str) -> None:
                                 "title": item["title"],
                                 "imageURL": item["imageURL"]["large"],
                                 "movieURL": item["sampleMovieURL"]["size_720_480"],
+                                "affiliateURL": item["affiliateURL"]
                             }
     print("api ok")
     app.state.mov_id_set = set(mov_ids)

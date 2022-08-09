@@ -4,7 +4,7 @@ import random
 from fastapi import APIRouter, Request
 
 
-from app.models.predict import PredictRequest, CutResponse, PredictResponse
+from app.models.predict import PredictRequest, CutResponse, PredictResponse, MovRecResponse
 
 api_router = APIRouter()
 
@@ -33,7 +33,7 @@ async def predict(request: Request, payload: PredictRequest) -> Any:
     predict_value =request.app.state.model.predict(input_text)
     return PredictResponse(result=predict_value)
 
-@api_router.post("/mov-rec", response_model=PredictResponse)
+@api_router.post("/mov-rec", response_model=MovRecResponse)
 async def predict(request: Request, payload: PredictRequest) -> Any:
     input_text = payload.input_text
     result = {}
@@ -46,6 +46,7 @@ async def predict(request: Request, payload: PredictRequest) -> Any:
             "content_id": mov_id,
             "title": request.app.state.mov_dict[mov_id]["title"],
             "movieURL": request.app.state.mov_dict[mov_id]["movieURL"],
+            "affiliateURL": request.app.state.mov_dict[mov_id]["affiliateURL"]
         }
         
     else:
@@ -60,7 +61,9 @@ async def predict(request: Request, payload: PredictRequest) -> Any:
             "content_id": mov_id,
             "title": request.app.state.mov_dict[mov_id]["title"],
             "movieURL": request.app.state.mov_dict[mov_id]["movieURL"],
+            "affiliateURL": request.app.state.mov_dict[mov_id]["affiliateURL"]
         }
+        
     result["thumbnails"] = []
     for id in ids:
         result["thumbnails"].append(
