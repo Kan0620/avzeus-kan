@@ -39,7 +39,7 @@ async def predict(request: Request, payload: PredictRequest) -> Any:
     result = {}
     if input_text == "init":
         all_ids = list(request.app.state.mov_dict.keys())
-        random.shuffle(all_ids)
+        #random.shuffle(all_ids)
         mov_id = all_ids[0]
         ids = all_ids[1:11]
         result["movie"] = {
@@ -54,7 +54,7 @@ async def predict(request: Request, payload: PredictRequest) -> Any:
         saw_mov_ids = input_text.split("-")
         ids -= set(saw_mov_ids)
         ids = list(ids)
-        random.shuffle(ids)
+        #random.shuffle(ids)
         ids = ids[:10]
         mov_id = saw_mov_ids[-1]
         result["movie"] = {
