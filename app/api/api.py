@@ -54,7 +54,6 @@ async def predict(request: Request, payload: PredictRequest) -> Any:
         saw_mov_ids = input_text.split("-")
         ids -= set(saw_mov_ids)
         ids = list(ids)
-        print(ids)
         #random.shuffle(ids)
         ids = ids[:10]
         mov_id = saw_mov_ids[-1]
@@ -66,7 +65,6 @@ async def predict(request: Request, payload: PredictRequest) -> Any:
         }
         
     result["thumbnails"] = []
-    print(len(ids))
     for id in ids:
         result["thumbnails"].append(
             {
