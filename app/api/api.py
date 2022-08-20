@@ -1,5 +1,6 @@
 from typing import Any
 import random
+import copy
 
 from fastapi import APIRouter, Request
 
@@ -38,7 +39,7 @@ async def predict(request: Request, payload: PredictRequest) -> Any:
     input_text = payload.input_text
     result = {}
     if input_text == "init":
-        all_ids = list(request.app.state.mov_dict.keys())
+        all_ids = list(copy.copy(request.app.state.mov_dict.keys()))
         #random.shuffle(all_ids)
         mov_id = all_ids[0]
         ids = all_ids[1:11]
@@ -50,14 +51,10 @@ async def predict(request: Request, payload: PredictRequest) -> Any:
         }
         
     else:
-        print(request.app.state.mov_id_set)
-        
-        ids = request.app.state.mov_id_set
-        print(ids)
+        ids = copy.copy(request.app.state.mov_id_set)
         saw_mov_ids = input_text.split("-")
         ids -= set(saw_mov_ids)
         ids = list(ids)
-        print(request.app.state.mov_id_set)
         #random.shuffle(ids)
         ids = ids[:10]
         mov_id = saw_mov_ids[-1]
@@ -67,7 +64,6 @@ async def predict(request: Request, payload: PredictRequest) -> Any:
             "movieURL": request.app.state.mov_dict[mov_id]["movieURL"],
             "affiliateURL": request.app.state.mov_dict[mov_id]["affiliateURL"]
         }
-    print(ids)
     result["thumbnails"] = []
     for id in ids:
         result["thumbnails"].append(
