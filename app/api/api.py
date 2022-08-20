@@ -50,10 +50,14 @@ async def predict(request: Request, payload: PredictRequest) -> Any:
         }
         
     else:
+        print(request.app.state.mov_id_set)
+        
         ids = request.app.state.mov_id_set
+        print(ids)
         saw_mov_ids = input_text.split("-")
         ids -= set(saw_mov_ids)
         ids = list(ids)
+        print(request.app.state.mov_id_set)
         #random.shuffle(ids)
         ids = ids[:10]
         mov_id = saw_mov_ids[-1]
@@ -63,7 +67,7 @@ async def predict(request: Request, payload: PredictRequest) -> Any:
             "movieURL": request.app.state.mov_dict[mov_id]["movieURL"],
             "affiliateURL": request.app.state.mov_dict[mov_id]["affiliateURL"]
         }
-        
+    print(ids)
     result["thumbnails"] = []
     for id in ids:
         result["thumbnails"].append(
