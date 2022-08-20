@@ -39,7 +39,8 @@ async def predict(request: Request, payload: PredictRequest) -> Any:
     input_text = payload.input_text
     result = {}
     if input_text == "init":
-        all_ids = list(copy.copy(request.app.state.mov_dict.keys()))
+        copied_mov_dict = copy.copy(request.app.state.mov_dict)
+        all_ids = list(copied_mov_dict.keys())
         #random.shuffle(all_ids)
         mov_id = all_ids[0]
         ids = all_ids[1:11]
