@@ -20,6 +20,7 @@ import torch
 from facenet_pytorch import InceptionResnetV1, MTCNN
 from torchvision import transforms
 import numpy as np
+import pandas as pd
 import wget
 
 
@@ -37,15 +38,16 @@ class MLModel(BaseMLModel):
     def __init__(self, model_path: str) -> None:
         self.mtcnn = MTCNN(image_size = 160, margin = 10).eval()
         #self.resnet = InceptionResnetV1(pretrained='vggface2').eval()
-        model_url = os.environ["MODEL_URL"]
-        file = wget.download(model_url + "model.pt")
+        data_url = os.environ["DATA_URL"]
+        file = wget.download(data_url + "model.pt")
         self.resnet = torch.load(file)
         self.transform = transforms.Compose([
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
             ])
-        self.ids = np.load("app/data/id.npy")
-        self.vecs = np.load("app/data/actress_vecs.npy", allow_pickle = True)
+        df = pd.read_csv(data_url + "id_with_no_err_vec.csv")
+        self.ids = df["id"].tolist()
+        self.vecs = df.drop("id", axis=1).values
 
     def cut(self, input_text: str) -> dict:
         input_text = BytesIO(base64.b64decode(input_text))
@@ -81,6 +83,5 @@ class MLModel(BaseMLModel):
         # result_arr = (self.vecs * img.reshape((1, 512))).sum(axis=1)/np.linalg.norm(self.vecs, axis=1)/np.linalg.norm(img)
         # for index in np.argsort(result_arr)[::-1][:10]:
         #     rec_actress_id += str(self.ids[index]) + "-"
-
         return {"rec_actress_id": rec_actress_id[:-1]}
     
